@@ -91,7 +91,7 @@ We welcome contributors! 🚀
 - For security vulnerabilities, contact us directly.
 
 ## License 📝
-This project is licensed under [License Name]. See the LICENSE file for details.
+This project is licensed under [LICENSE]. See the LICENSE file for details.
 
 ## 📞 Contact & Support
 - **Your Name**  
