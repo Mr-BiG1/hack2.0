@@ -1,15 +1,18 @@
-const { initializeApp, cert } = require('firebase-admin/app');
-const { getFirestore } = require('firebase-admin/firestore');
+const { initializeApp, cert } = require("firebase-admin/app");
+const { getFirestore } = require("firebase-admin/firestore");
+const { getAuth } = require("firebase-admin/auth"); 
 
 // Load Firebase Service Key
-const serviceAccount = require('./ruralcare-3231e-firebase-adminsdk-fbsvc-abdc2adc5d.json'); 
+const serviceAccount = require("./ruralcare-3231e-firebase-adminsdk-fbsvc-8820ad4717.json");
 
 // Initialize Firebase Admin SDK
-initializeApp({
-    credential: cert(serviceAccount)
+const app = initializeApp({
+    credential: cert(serviceAccount),
 });
 
-// Initialize Firestore
-const db = getFirestore();
+// Initialize Firestore & Auth
+const db = getFirestore(app);
+const auth = getAuth(app); 
 
-module.exports = { db };
+// Export both auth and db
+module.exports = { auth, db };
