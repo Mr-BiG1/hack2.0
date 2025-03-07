@@ -14,7 +14,7 @@ const chatbotRoutes = require("./src/routes/chatbotRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 const telehealthRoutes = require("./src/routes/telehealthRoutes");
 
-// Ensure you are correctly using `app.use()`
+
 app.use("/api/chatbot", chatbotRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/telehealth", telehealthRoutes);
