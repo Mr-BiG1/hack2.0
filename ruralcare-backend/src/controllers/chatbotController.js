@@ -28,19 +28,25 @@ const userRegister = async (req, res) => {
 // User Login & Token Generation
 const postLogin = async (req, res) => {
     try {
-        const { email } = req.body;
-        const user = await auth.getUserByEmail(email);
-        const customToken = await auth.createCustomToken(user.uid);
+        const { token } = req.body; 
+
+        if (!token) {
+            return res.status(400).json({ error: "No ID token provided" });
+        }
+
+        // Verify ID token
+        const decodedToken = await auth.verifyIdToken(token);
         res.status(200).json({
             message: "Login successful",
-            userId: user.uid,
-            email: user.email,
-            token: customToken,
+            userId: decodedToken.uid,
+            email: decodedToken.email || "N/A",
+            token: token, 
         });
     } catch (error) {
-        res.status(400).json({ error: "Invalid email or user not found",error });
+        res.status(403).json({ error: "Invalid token", details: error.message });
     }
 };
+
 
 // Protected Route - Verify Token
 const protectedRoute = async (req, res) => {
