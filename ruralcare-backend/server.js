@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('RuralCare Backend is running...');
+    res.send('server Backend is running...');
 });
 
 const PORT = process.env.PORT || 5000;
