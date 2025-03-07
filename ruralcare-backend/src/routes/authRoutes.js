@@ -2,6 +2,9 @@ const express = require("express");
 const admin = require("firebase-admin");
 const router = express.Router();
 
+// Firestore FieldValue Fix
+const FieldValue = admin.firestore.FieldValue;
+
 // Register User
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
@@ -12,26 +15,17 @@ router.post("/register", async (req, res) => {
       displayName: name,
     });
 
-    await admin.firestore().collection("users").doc(userRecord.uid).set({
+    // Check Firestore before writing
+    const userRef = admin.firestore().collection("users").doc(userRecord.uid);
+    await userRef.set({
       name,
       email,
-      createdAt: admin.firestore.FieldValue.serverTimestamp(),
+      createdAt: FieldValue.serverTimestamp(),
     });
 
-    res.status(201).json({ message: "User registered", userId: userRecord.uid });
+    res.status(201).json({ message: "User registered successfully!", userId: userRecord.uid });
   } catch (error) {
     res.status(500).json({ error: error.message });
-  }
-});
-
-// Login User
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await admin.auth().getUserByEmail(email);
-    res.json({ userId: user.uid, email: user.email, name: user.displayName });
-  } catch (error) {
-    res.status(400).json({ error: "Invalid credentials" });
   }
 });
 
