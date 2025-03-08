@@ -1,0 +1,183 @@
+/*  Stepper Wrapper - Centered & Responsive */
+.stepper-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+/*  Step Circle */
+.step {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #ddd;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+/*  Active Step */
+.step.active {
+    background: #007bff;
+    transform: scale(1.1);
+}
+
+/* Step Labels */
+.step-label {
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Stepper Line */
+.step-line {
+    width: 70px;
+    height: 4px;
+    background: #ddd;
+    transition: background 0.3s ease-in-out;
+}
+
+/* Active Line */
+.step-line.active-line {
+    background: #007bff;
+}
+
+/* Form Container - Centered & Responsive */
+.auth-container {
+    max-width: 480px;
+    margin: 50px auto;
+    padding: 30px;
+    text-align: center;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 5px 18px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.4s ease-in-out;
+     margin: auto; 
+    max-width: 420px;
+    max-height: 540px;
+}
+
+/*  Form Title */
+.form-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+}
+
+/*  Form Fields */
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+/*  Input Fields */
+.auth-form input,
+.auth-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+/*  Input Focus Effect */
+.auth-form input:focus,
+.auth-form textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 8px rgba(0, 123, 255, 0.3);
+    outline: none;
+}
+
+/*  Navigation Buttons */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 20px;
+}
+
+/*  Buttons */
+.btn-back,
+.btn-next,
+.btn-submit {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+/*  Button Colors */
+.btn-next {
+    background: #007bff;
+    color: white;
+}
+
+.btn-submit {
+    background: #28a745;
+    color: white;
+}
+
+/*  Button Hover Effects */
+.btn-next:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+}
+
+.btn-submit:hover {
+    background: #218838;
+    transform: scale(1.05);
+}
+
+/*  Animated Form Sections */
+.step-content {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+/*  Show Active Step Content */
+.step-content.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/*  Responsive Adjustments */
+@media (max-width: 600px) {
+    .auth-container {
+        max-width: 90%;
+        padding: 20px;
+    }
+    .step-line {
+        width: 50px;
+    }
+}
+
+/*  Ensure Buttons Scale Well */
+.button-group {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/*  Smooth Transition for Form */
+.auth-container {
+    transition: all 0.4s ease-in-out;
+}

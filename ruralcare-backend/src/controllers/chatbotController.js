@@ -4,26 +4,41 @@ const { auth, db } = require("../config/firebase");
 // User Registration
 const userRegister = async (req, res) => {
     try {
-        const { name, email, password } = req.body;
+        
+        let { name, email, password, dob, address, age, weight, height, medicalCondition, medicalHistory } = req.body;
+
+        
+        medicalCondition = medicalCondition || "N/A";  
+        medicalHistory = medicalHistory || "N/A";
+
+     
         const userRecord = await auth.createUser({
             email,
             password,
             displayName: name,
         });
 
-        // Store user in Firestore
+        
         await db.collection("users").doc(userRecord.uid).set({
-            name,
-            email,
+            name: name || "N/A",  
+            email: email || "N/A",
+            dob: dob || "N/A",
+            address: address || "N/A",
+            age: age || "N/A",
+            weight: weight || "N/A",
+            height: height || "N/A",
+            medicalCondition,  
+            medicalHistory,   
             createdAt: admin.firestore.FieldValue.serverTimestamp(),
         });
 
-        res.status(201).json({ message: "User registered successfully!", userId: userRecord.uid });
+        res.status(201).json({ message: " User registered successfully!", userId: userRecord.uid });
 
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        res.status(500).json({ error: `Error: ${error.message}` });
     }
 };
+
 
 // User Login & Token Generation
 const postLogin = async (req, res) => {
@@ -31,22 +46,22 @@ const postLogin = async (req, res) => {
         const { token } = req.body;
 
         if (!token) {
-            return res.status(400).json({ error: "❌ No ID token provided" });
+            return res.status(400).json({ error: " No ID token provided" });
         }
 
-        // ✅ Verify the ID token with Firebase
+        
         const decodedToken = await auth.verifyIdToken(token);
         const userId = decodedToken.uid;
         const email = decodedToken.email || "N/A";
 
         res.status(200).json({
-            message: "✅ Login successful",
+            message: "Login successful",
             userId,
             email,
             token,
         });
     } catch (error) {
-        res.status(403).json({ error: "❌ Invalid token", details: error.message });
+        res.status(403).json({ error: "Invalid token", details: error.message });
     }
 };
 

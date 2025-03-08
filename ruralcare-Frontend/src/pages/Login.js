@@ -8,7 +8,8 @@ function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [message, setMessage] = useState("");
   const [token, setToken] = useState("");
-  const navigate = useNavigate(); // Initialize navigate
+  // Initialize navigate
+  const navigate = useNavigate(); 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -35,16 +36,16 @@ function Login() {
 
       const data = await response.json();
       if (response.ok) {
-        setMessage("✅ Login successful!");
+        setMessage(" Login successful!");
         setToken(idToken);
         localStorage.setItem("token", idToken);
 
         setTimeout(() => navigate("/dashboard"), 1500); 
       } else {
-        setMessage(`❌ Error: ${data.error}`);
+        setMessage(` Error: ${data.error}`);
       }
     } catch (error) {
-      setMessage("❌ Authentication failed. Check credentials.");
+      setMessage(" Authentication failed. Check credentials.");
     }
   };
 
