@@ -1,15 +1,35 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import "./App.css"; 
 
-function Navbar() {
+function App() {
   return (
-    <nav style={{ padding: "10px", background: "#282c34", color: "white" }}>
-      <Link to="/" style={{ margin: "10px", color: "white" }}>Home</Link>
-      <Link to="/register" style={{ margin: "10px", color: "white" }}>Register</Link>
-      <Link to="/login" style={{ margin: "10px", color: "white" }}>Login</Link>
-      <Link to="/dashboard" style={{ margin: "10px", color: "white" }}>Dashboard</Link>
-    </nav>
+    <Router>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div className="container">
+          <Link className="navbar-brand" to="/">RuralCare</Link>
+          <div className="collapse navbar-collapse">
+            <ul className="navbar-nav ml-auto">
+              <li className="nav-item"><Link className="nav-link" to="/register">Register</Link></li>
+              <li className="nav-item"><Link className="nav-link" to="/login">Login</Link></li>
+              <li className="nav-item"><Link className="nav-link" to="/dashboard">Dashboard</Link></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div className="container mt-5">
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
-export default Navbar;
+export default App;

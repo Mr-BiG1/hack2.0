@@ -28,24 +28,28 @@ const userRegister = async (req, res) => {
 // User Login & Token Generation
 const postLogin = async (req, res) => {
     try {
-        const { token } = req.body; 
+        const { token } = req.body;
 
         if (!token) {
-            return res.status(400).json({ error: "No ID token provided" });
+            return res.status(400).json({ error: "❌ No ID token provided" });
         }
 
-        // Verify ID token
+        // ✅ Verify the ID token with Firebase
         const decodedToken = await auth.verifyIdToken(token);
+        const userId = decodedToken.uid;
+        const email = decodedToken.email || "N/A";
+
         res.status(200).json({
-            message: "Login successful",
-            userId: decodedToken.uid,
-            email: decodedToken.email || "N/A",
-            token: token, 
+            message: "✅ Login successful",
+            userId,
+            email,
+            token,
         });
     } catch (error) {
-        res.status(403).json({ error: "Invalid token", details: error.message });
+        res.status(403).json({ error: "❌ Invalid token", details: error.message });
     }
 };
+
 
 
 // Protected Route - Verify Token
