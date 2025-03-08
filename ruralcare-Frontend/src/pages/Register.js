@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Register.css"; 
+import "./Register.css";
 
 function Register() {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    name: "", email: "", password: "", dob: "", address: "", age: "", weight: "", height: "", condition: "", history: ""
+    name: "", email: "", password: "", dob: "", address: "", age: "", 
+    weight: "", height: "", phoneNumber: "", condition: "", history: ""
   });
   const [message, setMessage] = useState("");
 
@@ -40,7 +41,7 @@ function Register() {
         setMessage(`Error: ${data.error}`);
       }
     } catch (error) {
-      setMessage("Network error. Try again.");
+      setMessage(" Network error. Try again.");
     }
   };
 
@@ -79,13 +80,13 @@ function Register() {
         {/* Step 3 */}
         {step === 3 && (
           <div className={`step-content ${step === 3 ? "active" : ""}`}>
+            <input type="text" name="phoneNumber" placeholder="Phone Number" value={formData.phoneNumber} onChange={handleChange} required />
             <input type="number" name="weight" placeholder="Weight (kg)" value={formData.weight} onChange={handleChange} required />
             <input type="number" name="height" placeholder="Height (cm)" value={formData.height} onChange={handleChange} required />
             <input type="text" name="condition" placeholder="Current Medical Condition" value={formData.condition} onChange={handleChange} required />
             <textarea name="history" placeholder="Previous Medical History" value={formData.history} onChange={handleChange} required />
           </div>
         )}
-
 
         {/* Step Navigation Buttons */}
         <div className="button-group">
@@ -97,7 +98,6 @@ function Register() {
           )}
         </div>
       </form>
-
 
       <p className="text-center mt-3">{message}</p>
     </div>

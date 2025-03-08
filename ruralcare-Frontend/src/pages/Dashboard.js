@@ -46,7 +46,7 @@ function Dashboard() {
     setMessage("");
 
     if (!navigator.geolocation) {
-      setMessage("❌ Geolocation is not supported by your browser.");
+      setMessage(" Geolocation is not supported by your browser.");
       setLoading(false);
       return;
     }
@@ -70,13 +70,13 @@ function Dashboard() {
             setFacilities([]);
           }
         } catch (error) {
-          setMessage("⚠️ Could not fetch facilities.");
+          setMessage(" Could not fetch facilities.");
         }
         setLoading(false);
       },
       (error) => {
-        console.error("⚠️ Location Access Denied:", error);
-        setMessage("⚠️ Please enable location access to find nearby healthcare facilities.");
+        console.error(" Location Access Denied:", error);
+        setMessage(" Please enable location access to find nearby healthcare facilities.");
         setLoading(false);
       }
     );

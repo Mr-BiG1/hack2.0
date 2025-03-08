@@ -37,7 +37,7 @@ function ChatPage() {
       const data = await response.json();
       setMessages((prev) => [...prev, { text: data.reply, sender: "bot" }]);
     } catch (error) {
-      setMessages((prev) => [...prev, { text: "⚠️ Error: Could not reach bot.", sender: "bot" }]);
+      setMessages((prev) => [...prev, { text: " Error: Could not reach bot.", sender: "bot" }]);
     }
     setLoading(false);
   };
