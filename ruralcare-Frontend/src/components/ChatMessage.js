@@ -1,28 +1,6 @@
-// // // ChatMessage.js
-// import React from "react";
-// import { FaUser, FaRobot } from "react-icons/fa";
-// import "../Chat.css"; // Ensure correct path to your CSS
-
-// function ChatMessage({ message }) {
-//   return (
-//     <div className={`chat-message ${message.sender === "user" ? "user-message" : "bot-message"}`}>
-//       <div className="message-content">
-//         {message.sender === "user" ? (
-//           <FaUser className="user-icon" />
-//         ) : (
-//           <FaRobot className="bot-icon" />
-//         )}
-//         <p>{message.text}</p>
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default ChatMessage;
-
 import React from "react";
 import { FaUser, FaRobot } from "react-icons/fa";
-import "../Chat.css"; // Ensure correct path to your CSS
+import "../Chat.css"; 
 
 function ChatMessage({ message }) {
   return (

@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from "react";
 import ChatHeader from "./ChatHeader";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
+import HospitalMap from "./HospitalMap";
 import "../Chat.css";
 
 function Chat() {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [selectedFacility, setSelectedFacility] = useState(null);
     const chatEndRef = useRef(null);
 
     useEffect(() => {
@@ -47,29 +49,50 @@ function Chat() {
             return { error: "Failed to load user data. Check your network connection." };
         }
     };
-    const getNearbyDoctors = async (specialty) => {
-        try {
-            const response = await fetch(`http://localhost:8080/api/doctors?specialty=${specialty}`);
-            const data = await response.json();
 
-            if (data.length > 0) {
-                return data.map(doctor => `- **${doctor.name}** (${doctor.location})`).join("\n");
-            } else {
-                return "No nearby doctors found. Please check with local hospitals.";
-            }
-        } catch (error) {
-            return "⚠️ **Error:** Could not fetch doctor information.";
+    //  Fetch Nearby Hospitals
+    const fetchNearbyHospitals = async () => {
+        if (!navigator.geolocation) {
+            return " Location services not supported.";
         }
+
+        return new Promise((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+
+                    try {
+                        const response = await fetch(`http://localhost:8080/api/healthcare-facilities?lat=${lat}&lon=${lon}`);
+                        const data = await response.json();
+
+                        if (data.facilities && data.facilities.length > 0) {
+                            const hospitalList = data.facilities.map(
+                                (hospital, index) => `${index + 1}. **${hospital.name}** - 📍 ${hospital.address}`
+                            ).join("\n");
+                            resolve(hospitalList);
+                        } else {
+                            resolve("⚠️ No hospitals found near your location.");
+                        }
+                    } catch (error) {
+                        reject("⚠️ Failed to fetch nearby hospitals.");
+                    }
+                },
+                (error) => {
+                    reject("⚠️ Please enable location access.");
+                }
+            );
+        });
     };
 
-    //  Analyze Symptoms & Provide Recommendations
+    // Analyze Symptoms & Recommend Doctor
     const analyzeSymptoms = async (userMessage, userData) => {
         //  Step 1: Emergency Symptom Check
         if (await isEmergency(userMessage)) {
-            return " Emergency Alert: Your symptoms may indicate a serious condition. Call 911 immediately or visit the nearest ER!**";
+            return "🚨 Emergency Alert:** Your symptoms may indicate a serious condition. Call 911 immediately or visit the nearest ER!";
         }
 
-        //  Step 2: Check if Symptoms Match a Known Specialist
+        // Step 2: Check if Symptoms Match a Known Specialist
         const symptomToSpecialist = {
             "chest pain": "Cardiologist",
             "dizziness": "Neurologist",
@@ -99,30 +122,23 @@ function Chat() {
 
         //  Step 3: Find Nearby Doctors if Specialist is Identified
         if (specialist) {
-            response += "\n🩺 Searching for nearby doctors...";
-            const doctorList = await getNearbyDoctors(specialist);
-            response += `\n\n**Available Specialists:**\n${doctorList}`;
+            response += "\n🩺 **Searching for nearby hospitals...**";
+            
+            try {
+                const hospitalList = await fetchNearbyHospitals();
+                response += `\n\n📍 Nearby Hospitals: \n${hospitalList}`;
+            } catch (error) {
+                response += "\n⚠️ Could not retrieve hospital information.";
+            }
         } else {
-            //  Step 4: Use AI if No Specialist is Found
+            //  Step 4: Use AIif No Specialist is Found
             response = await callGPTMedicalAPI(userMessage, userData);
         }
 
         return response;
     };
 
-    //  Check for Emergency Cases
-    const isEmergency = async (userMessage) => {
-        const emergencySymptoms = ["severe chest pain", "difficulty breathing", "unconscious", "numbness in arm"];
-
-        for (const symptom of emergencySymptoms) {
-            if (userMessage.toLowerCase().includes(symptom)) {
-                return true;
-            }
-        }
-        return false;
-    };
-
-    //  Call GPT-4 API for Advanced Analysis
+    //  Call  API for Advanced Analysis
     const callGPTMedicalAPI = async (userMessage, userData) => {
         const prompt = `
         Patient Name: ${userData.name}
@@ -131,7 +147,7 @@ function Chat() {
         Height: ${userData.height} cm
         Medical History: ${userData.medicalHistory}
         Current Symptoms: ${userMessage}
-      
+
         **Task:**
         - Analyze the user's symptoms.
         - Suggest which medical department they should visit.
@@ -156,12 +172,9 @@ function Chat() {
             const data = await response.json();
             return data.choices[0].message.content;
         } catch (error) {
-            return "Error:  Could not retrieve AI response.";
+            return "⚠️ **Error:** Could not retrieve AI response.";
         }
     };
-
-    // Fetch Nearby Doctors API
-
 
     //  Handle User Messages
     const sendMessage = async (text) => {
@@ -177,6 +190,14 @@ function Chat() {
         // Medical Analysis Based on Symptoms
         let responseMessage = await analyzeSymptoms(text, userData);
 
+        //  If Hospitals are Mentioned, Select First Hospital for Map
+        if (responseMessage.includes("📍 Nearby Hospitals:")) {
+            const hospitalMatch = responseMessage.match(/1\. \*\*(.+?)\*\* - 📍 (.+)/);
+            if (hospitalMatch) {
+                setSelectedFacility({ name: hospitalMatch[1], address: hospitalMatch[2] });
+            }
+        }
+
         setMessages([...messages, newMessage, { text: responseMessage, sender: "bot" }]);
         setLoading(false);
     };
@@ -189,8 +210,16 @@ function Chat() {
                     <ChatMessage key={index} message={msg} />
                 ))}
                 {loading && <p className="typing">Bot is typing...</p>}
-                <div ref={chatEndRef}></div>
             </div>
+
+            {/*  Show Map if Hospital is Found */}
+            {selectedFacility && (
+                <div className="hospital-map-container">
+                    <h3>📍 Nearest Recommended Hospital</h3>
+                    <HospitalMap facility={selectedFacility} />
+                </div>
+            )}
+
             <ChatInput sendMessage={sendMessage} />
         </div>
     );
