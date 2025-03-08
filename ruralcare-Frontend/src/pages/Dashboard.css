@@ -1,117 +1,128 @@
-General Dashboard Styling
 .dashboard-container {
-  max-width: 900px;
+  max-width: 800px;
   margin: auto;
-  text-align: center;
   padding: 20px;
-  background: #ffffff;
+  text-align: center;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-header {
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.quick-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.quick-actions .btn {
+  padding: 10px 15px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+.map-section {
+  margin-top: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Logout button */
+.logout-btn {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+/* Profile Card */
+.profile-card {
+  background: #e3f2fd;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 15px 0;
+  text-align: left;
+}
+.dashboard-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background: white;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Title Styling */
-.dashboard-title {
-  font-size: 26px;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-/* User Profile Card */
-.user-card {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  text-align: left;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* Statistics Section */
-.stats-container {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  flex-wrap: wrap;
-}
-
-/* Individual Stat Cards */
-.stat-card {
-  background: #007bff;
-  color: white;
-  padding: 20px;
-  border-radius: 8px;
-  width: 30%;
-  font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease-in-out;
-  cursor: pointer;
-}
-
-/* Stat Cards Hover Effect */
-.stat-card:hover {
-  transform: scale(1.05);
-}
-
-/* Icon inside Stat Cards */
-.stat-icon {
-  font-size: 30px;
-  margin-bottom: 5px;
-}
-
-/* Activity Log Section */
-.activity-section {
-  margin-top: 20px;
-  text-align: left;
-}
-
-/* Table Styling */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 10px;
-  background: white;
-}
-
-table th, table td {
-  border: 1px solid #ddd;
-  padding: 10px;
+.dashboard-header {
   text-align: center;
+  margin-bottom: 20px;
 }
 
-/* Logout Button */
-.logout-btn {
-  margin-top: 20px;
-  background: red;
-  color: white;
-  padding: 12px 20px;
-  border: none;
+.profile-card {
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.facility-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+}
+
+.facility-controls select {
+  padding: 8px;
   border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.fetch-btn {
+  padding: 8px 15px;
+}
+
+.facility-list {
+  list-style: none;
+  padding: 0;
+}
+
+.facility-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
   cursor: pointer;
-  font-size: 16px;
-  transition: 0.3s ease-in-out;
-  width: 100%;
-  max-width: 250px;
 }
 
-.logout-btn:hover {
-  background: darkred;
+.facility-item:hover {
+  background: #f1f1f1;
 }
 
-/* Mobile Responsive Styling */
-@media (max-width: 768px) {
-  .stats-container {
-      flex-direction: column;
-      align-items: center;
-  }
+.facility-icon {
+  margin-right: 10px;
+}
 
-  .stat-card {
-      width: 80%;
-      margin-bottom: 15px;
-  }
+.hospital { color: red; }
+.clinic { color: blue; }
+.pharmacy { color: green; }
+
+.selected-facility-card {
+  padding: 15px;
+  background: #eef7ff;
+  border-radius: 8px;
+  margin-top: 15px;
 }

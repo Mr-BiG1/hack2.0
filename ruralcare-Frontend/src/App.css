@@ -71,3 +71,8 @@ body {
 .auth-form input {
   margin-bottom: 10px;
 }
+
+.leaflet-container {
+  height: 500px;
+  width: 100%;
+}
