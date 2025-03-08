@@ -9,13 +9,15 @@ app.use(express.json());
 app.use(cors());
 
 const verifyToken = require("./src/middleware/authMiddleware");
-const chatbotRoutes = require("./src/routes/chatbotRoutes");
+const chatbotRoutes = require("./src/routes/authRoutes");
 const authRoutes = require("./src/routes/authRoutes");
 const telehealthRoutes = require("./src/routes/telehealthRoutes");
+const aibot = require('./src/routes/chatbotRoutes');
 
 app.use("/api/chatbot", chatbotRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/telehealth", telehealthRoutes);
+app.use('/api/chatbot',aibot);
 
 //  Fetch Nearby Healthcare Facilities
 app.get("/api/healthcare-facilities", async (req, res) => {

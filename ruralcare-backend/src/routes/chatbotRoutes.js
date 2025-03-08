@@ -1,34 +1,27 @@
 const express = require("express");
-const axios = require("axios");
-const admin = require("firebase-admin");
-
 const router = express.Router();
+require("dotenv").config();
+const OpenAI = require("openai");
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
 router.post("/", async (req, res) => {
+  const userMessage = req.body.message?.trim(); // Trim to remove spaces
+
+  if (!userMessage) {
+    return res.status(400).json({ reply: "⚠️ Please enter a message." });
+  }
+
   try {
-    const { userId, message } = req.body;
-    const response = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        model: "gpt-4",
-        messages: [{ role: "system", content: "You are a medical assistant." }, { role: "user", content: message }],
-      },
-      { headers: { Authorization: `Bearer ${process.env.OPENAI_API_KEY}`, "Content-Type": "application/json" } }
-    );
-
-    const chatbotResponse = response.data.choices[0].message.content;
-
-    // Save message to Firestore
-    await admin.firestore().collection("chatbot_messages").add({
-      userId,
-      message,
-      response: chatbotResponse,
-      timestamp: admin.firestore.FieldValue.serverTimestamp(),
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o",
+      messages: [{ role: "user", content: userMessage }],
     });
 
-    res.json({ reply: chatbotResponse });
+    res.json({ reply: completion.choices[0].message.content });
   } catch (error) {
-    res.status(500).json({ error: "Chatbot failed" });
+    console.error("❌ OpenAI API Error:", error);
+    res.status(500).json({ reply: "⚠️ Sorry, I couldn't process your request." });
   }
 });
 

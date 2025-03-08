@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { FaUser, FaHeartbeat, FaSignOutAlt, FaMapMarkerAlt, FaClock, FaHospital, FaClinicMedical, FaPills } from "react-icons/fa";
 import "./Dashboard.css";
 import HospitalMap from "./HospitalMap";
@@ -9,7 +10,7 @@ function Dashboard() {
   const [facilities, setFacilities] = useState([]);
   const [loading, setLoading] = useState(false);
   const [selectedFacility, setSelectedFacility] = useState(null);
-  const [facilityType, setFacilityType] = useState("hospital"); 
+  const [facilityType, setFacilityType] = useState("hospital");
 
   // Fetch User Authentication
   const fetchProtectedData = useCallback(async () => {
@@ -30,11 +31,11 @@ function Dashboard() {
       if (response.ok) {
         setUser(data.user);
       } else {
-        setMessage(` Error: ${data.error}`);
+        setMessage(`Error: ${data.error}`);
         window.location.href = "/login";
       }
     } catch (error) {
-      setMessage(" Failed to load user data.");
+      setMessage("Failed to load user data.");
       window.location.href = "/login";
     }
   }, []);
@@ -45,7 +46,7 @@ function Dashboard() {
     setMessage("");
 
     if (!navigator.geolocation) {
-      setMessage(" Geolocation is not supported by your browser.");
+      setMessage("❌ Geolocation is not supported by your browser.");
       setLoading(false);
       return;
     }
@@ -55,7 +56,7 @@ function Dashboard() {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
 
-        console.log(` User Location: Lat: ${lat}, Lon: ${lon}`);
+        console.log(`📍 User Location: Lat: ${lat}, Lon: ${lon}`);
 
         try {
           const response = await fetch(
@@ -69,13 +70,13 @@ function Dashboard() {
             setFacilities([]);
           }
         } catch (error) {
-          setMessage(" Could not fetch facilities.");
+          setMessage("⚠️ Could not fetch facilities.");
         }
         setLoading(false);
       },
       (error) => {
-        console.error(" Location Access Denied:", error);
-        setMessage(" Please enable location access to find nearby healthcare facilities.");
+        console.error("⚠️ Location Access Denied:", error);
+        setMessage("⚠️ Please enable location access to find nearby healthcare facilities.");
         setLoading(false);
       }
     );
@@ -153,6 +154,13 @@ function Dashboard() {
           </div>
         </div>
       )}
+
+      {/* Chatbot Section (Redirects to Chat Page) */}
+      <div className="chatbot-section">
+        <h4>💬 Chat with RuralCare AI</h4>
+        <p>Click the button below to start a conversation with our AI bot.</p>
+        <Link to="/chat" className="btn btn-primary">Go to Chat</Link>
+      </div>
 
       {/* Logout Button */}
       <button className="btn btn-danger logout-btn" onClick={() => {
