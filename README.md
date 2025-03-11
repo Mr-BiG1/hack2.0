@@ -28,8 +28,8 @@ RuralCare is an **AI-powered healthcare chatbot** designed to assist people, esp
 ## 🔧 Installation & Setup 🚀
 1. **Clone the Repository**
     ```sh
-    git clone https://github.com/your-username/project-name.git
-    cd project-name
+    git clone https://github.com/Mr-BiG1/hack2.0.git
+    cd hack2.0
     ```
 2. **Install Dependencies**
     ```sh
