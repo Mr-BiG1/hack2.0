@@ -1,3 +1,4 @@
+// import 
 import React from "react";
 import "./PrivacyPolicy.css";
 
@@ -6,7 +7,7 @@ function PrivacyPolicy() {
     <div className="privacy-container">
       <h2>🔒 Privacy Policy</h2>
       <p>
-        Your privacy is important to us. We **do not** share or sell your data. Your personal information is securely stored and only used to enhance your **healthcare experience**.
+        Your privacy is important to us. We do not share or sell your data. Your personal information is securely stored and only used to enhance your healthcare experience.
       </p>
       <h3>What Data We Collect:</h3>
       <ul>
