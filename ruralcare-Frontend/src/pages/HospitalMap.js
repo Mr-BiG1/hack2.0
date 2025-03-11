@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-// Custom hospital/clinic/pharmacy icons
+// hospital/clinic/pharmacy icons
 const medicalIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/2966/2966484.png",
   iconSize: [30, 30],
