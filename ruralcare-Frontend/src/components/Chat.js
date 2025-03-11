@@ -72,14 +72,14 @@ function Chat() {
                             ).join("\n");
                             resolve(hospitalList);
                         } else {
-                            resolve("⚠️ No hospitals found near your location.");
+                            resolve(" No hospitals found near your location.");
                         }
                     } catch (error) {
-                        reject("⚠️ Failed to fetch nearby hospitals.");
+                        reject(" Failed to fetch nearby hospitals.");
                     }
                 },
                 (error) => {
-                    reject("⚠️ Please enable location access.");
+                    reject(" Please enable location access.");
                 }
             );
         });
