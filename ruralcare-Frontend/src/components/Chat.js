@@ -128,7 +128,7 @@ function Chat() {
                 const hospitalList = await fetchNearbyHospitals();
                 response += `\n\n📍 Nearby Hospitals: \n${hospitalList}`;
             } catch (error) {
-                response += "\n⚠️ Could not retrieve hospital information.";
+                response += "\n Could not retrieve hospital information.";
             }
         } else {
             //  Step 4: Use AIif No Specialist is Found
@@ -172,7 +172,7 @@ function Chat() {
             const data = await response.json();
             return data.choices[0].message.content;
         } catch (error) {
-            return "⚠️ **Error:** Could not retrieve AI response.";
+            return " Error: Could not retrieve AI response.";
         }
     };
 
