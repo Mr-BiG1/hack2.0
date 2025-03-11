@@ -4,7 +4,7 @@ import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import HospitalMap from "./HospitalMap";
 import "../Chat.css";
-
+// added 
 function Chat() {
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -89,7 +89,7 @@ function Chat() {
     const analyzeSymptoms = async (userMessage, userData) => {
         //  Step 1: Emergency Symptom Check
         if (await isEmergency(userMessage)) {
-            return "🚨 Emergency Alert:** Your symptoms may indicate a serious condition. Call 911 immediately or visit the nearest ER!";
+            return " Emergency Alert:** Your symptoms may indicate a serious condition. Call 911 immediately or visit the nearest ER!";
         }
 
         // Step 2: Check if Symptoms Match a Known Specialist
