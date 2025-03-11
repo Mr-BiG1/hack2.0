@@ -16,8 +16,8 @@ function Home() {
       <section className="aim-section">
         <h2>🌍 Our Mission</h2>
         <p>
-          We are revolutionizing **rural healthcare access** with AI-powered **chatbots, real-time hospital tracking**, 
-          and **telehealth booking** – all in one seamless experience.
+          We are revolutionizing rural healthcare access with AI-powered chatbots, real-time hospital tracking, 
+          and telehealth booking – all in one seamless experience.
         </p>
       </section>
 
